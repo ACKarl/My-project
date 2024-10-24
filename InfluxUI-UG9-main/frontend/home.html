@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfluxDB Drag and Drop Interface</title>
+    <style>
+       
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #3f51b5;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        
+        .dropzone, .query-builder {
+            border: 2px solid #ccc;
+            padding: 20px;
+            width: 30%;
+            min-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            position: relative;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .dropzone:hover, .query-builder.highlight {
+            border-color: #3f51b5;
+            background-color: #e3f2fd;
+        }
+
+        .dropzone h3, .query-builder h3 {
+            margin-top: 0;
+            color: #3f51b5;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        
+        .draggable {
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #3f51b5;
+            background-color: #bbdefb;
+            border-radius: 5px;
+            cursor: move;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .draggable:active {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .query-item {
+            background-color: #c8e6c9;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #388e3c;
+            border-radius: 5px;
+        }
+
+        
+        .clear-btn {
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 15px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        
+        .highlight {
+            border: 2px dashed #3f51b5;
+            background-color: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>InfluxDB Drag and Drop Interface</h2>
+
+    <div class="container">
+        <div id="buckets" class="dropzone">
+            <h3>Buckets</h3>
+            <div id="bucket1" class="draggable" draggable="true" data-type="bucket">Bucket 1</div>
+            <div id="bucket2" class="draggable" draggable="true" data-type="bucket">Bucket 2</div>
+        </div>
+
+        <div id="measurements" class="dropzone">
+            <h3>Measurements</h3>
+            <div id="measurement1" class="draggable" draggable="true" data-type="measurement">Measurement 1</div>
+            <div id="measurement2" class="draggable" draggable="true" data-type="measurement">Measurement 2</div>
+        </div>
+
+        <div id="fields" class="dropzone">
+            <h3>Fields</h3>
+            <div id="field1" class="draggable" draggable="true" data-type="field">Field 1</div>
+            <div id="field2" class="draggable" draggable="true" data-type="field">Field 2</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="query-builder" id="queryBuilder1" data-accept="bucket">
+            <h3>Query Builder1 (Buckets)</h3>
+        </div>
+
+        <div class="query-builder" id="queryBuilder2" data-accept="measurement">
+            <h3>Query Builder2 (Measurements)</h3>
+        </div>
+
+        <div class="query-builder" id="queryBuilder3" data-accept="field">
+            <h3>Query Builder3 (Fields)</h3>
+        </div>
+    </div>
+
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+            event.dataTransfer.setData("type", event.target.getAttribute('data-type'));
+        }
+
+        function drop(event, targetId) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            const draggedType = event.dataTransfer.getData("type");
+            const target = document.getElementById(targetId);
+            const targetAccept = target.getAttribute('data-accept');
+
+            if (draggedType === targetAccept) {
+                if (!isDuplicate(target, data)) {
+                    const element = document.getElementById(data);
+                    const clone = element.cloneNode(true);
+                    clone.className = "query-item";
+                    clone.removeAttribute("draggable");
+                    target.appendChild(clone);
+                    checkAndGenerateClearButton(targetId);
+                } else {
+                    alert("This item is already in the target area!");
+                }
+            } else {
+                alert("This item cannot be dropped here!");
+            }
+            target.classList.remove('highlight');
+        }
+
+        function isDuplicate(target, dataId) {
+            const existingItems = target.getElementsByClassName('query-item');
+            for (let item of existingItems) {
+                if (item.id === dataId) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function clearQuery(builderId) {
+            const builder = document.getElementById(builderId);
+            while (builder.children.length > 1) {
+                builder.removeChild(builder.lastChild);
+            }
+            const clearBtn = builder.querySelector('.clear-btn');
+            if (clearBtn) {
+                builder.removeChild(clearBtn);
+            }
+        }
+
+        function checkAndGenerateClearButton(builderId) {
+            const builder = document.getElementById(builderId);
+            if (builder.children.length > 1) {
+                let clearBtn = builder.querySelector('.clear-btn');
+                if (!clearBtn) {
+                    clearBtn = document.createElement('div');
+                    clearBtn.className = 'clear-btn';
+                    clearBtn.textContent = 'Clear';
+                    clearBtn.onclick = () => clearQuery(builderId);
+                    builder.appendChild(clearBtn);
+                }
+                clearBtn.style.display = 'block';
+            } else {
+                const clearBtn = builder.querySelector('.clear-btn');
+                if (clearBtn) {
+                    clearBtn.style.display = 'none';
+                }
+            }
+        }
+
+        function highlightArea(event, targetId) {
+            event.preventDefault();
+            const target = document.getElementById(targetId);
+            target.classList.add('highlight');
+        }
+
+        function unhighlightArea(event, targetId) {
+            event.preventDefault();
+            const target = document.getElementById(targetId);
+            target.classList.remove('highlight');
+        }
+
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.addEventListener('dragstart', drag);
+        });
+
+        document.querySelectorAll('.query-builder').forEach(builder => {
+            builder.addEventListener('dragover', (event) => {
+                allowDrop(event);
+                highlightArea(event, builder.id);
+            });
+            builder.addEventListener('drop', (event) => {
+                drop(event, builder.id);
+            });
+            builder.addEventListener('dragleave', (event) => {
+                unhighlightArea(event, builder.id);
+            });
+        });
+    </script>
+
+</body>
+</html>

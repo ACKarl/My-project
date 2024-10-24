@@ -1,0 +1,91 @@
+/**
+ * Defines custom CSS for index.html file.
+ */
+
+/* Center the main content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+/* Enlarge the h1 title */
+.main-content h1 {
+    font-size: 4em; /* Adjust the size as needed */
+}
+
+.main-content h3 {
+    font-size: 2em; /* Adjust the size as needed */
+}
+
+/* Style for buttons */
+.buttons button {
+    margin-left: 40px;
+    margin-right: 40px; /* Increase the margin between buttons */
+    font-family: 'Arial', sans-serif; /* Change the font family */
+    font-size: 1em; /* Adjust the font size */
+    font-weight: bold; /* Make the font bold */
+    padding: 12px 25px; /* Adjust the padding */
+    border: 2px solid #056FE3; /* Add a border */
+    background-color: #056FE3; /* Background color */
+    color: white; /* Text color */
+    border-radius: 5px; /* Border radius */
+    transition: background-color 0.3s, color 0.3s; /* Transition for hover effect */
+    min-width: 120px; /* Ensure buttons have at least this width */
+    text-align: center; /* Center the text */
+}
+
+.buttons button:hover {
+    background-color: #034ea2; /* Darker background color on hover */
+    color: white; /* Text color on hover */
+}
+
+/* Style for the profile section inside the main tag */
+.profile-page {
+    padding: 20px; 
+    background-color: white; 
+    width: 100%;
+    height: 100%;
+}
+
+.profile-page h2 {
+    font-size: 2.5em;
+    margin-left: 10px;
+    margin-bottom: 50px; 
+    border-bottom: 2px solid; 
+    padding-bottom: 10px;
+}
+
+/* Style for individual profile divs */
+#profile {
+    display: flex;
+    padding: 15px; 
+    margin: 25px;
+    margin-bottom: 45px; /* Add vertical space between #profile elements */
+    background-color: #e2e2e2; /* background of dev */
+    border-radius: 8px;
+}
+
+#profile span {
+    font-weight: bold;
+    color: #056FE3; 
+    margin-right: 15px;
+    min-width: 150px; 
+    font-size: 1.3em;
+}
+
+#profile p {
+    margin: 0; 
+    color: #333; 
+    flex-grow: 1;
+    word-break: break-all;
+    font-size: 1.3em;
+}
+
+#logout {
+    margin-top: 30px;
+    margin-left: 25px;
+}

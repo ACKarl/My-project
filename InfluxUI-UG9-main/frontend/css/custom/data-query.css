@@ -1,0 +1,93 @@
+body.custom {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #3f51b5;
+    margin-bottom: 30px;
+}
+
+.container2 {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+
+.dropzone, .query-builder-c {
+    border: 2px solid #ccc;
+    padding: 20px;
+    width: 30%;
+    min-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dropzone:hover, .query-builder.highlight {
+    border-color: #3f51b5;
+    background-color: #e3f2fd;
+}
+
+.dropzone h3, .query-builder-c h3 {
+    margin-top: 0;
+    color: #3f51b5;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.draggable {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #3f51b5;
+    background-color: #bbdefb;
+    border-radius: 5px;
+    cursor: move;
+    transition: box-shadow 0.2s ease;
+}
+
+.draggable:active {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.query-item {
+    background-color: #c8e6c9;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #388e3c;
+    border-radius: 5px;
+}
+
+
+.clear-btn {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.clear-btn:hover {
+    background-color: #d32f2f;
+}
+
+
+.highlight {
+    border: 2px dashed #3f51b5;
+    background-color: #e8f5e9;
+}

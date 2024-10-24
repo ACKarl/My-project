@@ -1,0 +1,234 @@
+/* frontend/css/custom/core.css */
+/* Specific styles for core.html and its Vue.js application */
+
+.core-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px; /* Increased gap between the main sections */
+    transform: scale(1.1); /* Reduced the scaling to prevent overlap with the sidebar */
+    margin-left: 70px; /* Add margin to leave space for the sidebar */
+}
+
+#title {
+    font-size: 2.8em;
+    margin-left: 20px;
+    margin-bottom: 60px; 
+    border-bottom: 3px solid; 
+    padding-bottom: 15px;
+}
+
+/* Styling for the selection area to make the boundary distinct */
+/* Set the selected items container to have a scrollable area */
+.selected-items {
+    border: 2px dashed #056FE3;
+    padding: 15px;
+    margin-top: 30px;
+    max-height: 400px; /* Limit the height to avoid taking too much space */
+    overflow-y: auto; /* Add scroll bar for selected items when too many */
+    background-color: #f9f9f9;
+}
+
+/* Styling for bucket, measurement, and field lists */
+.source-lists {
+    display: flex;
+    flex-direction: row;
+    gap: 30px; /* Increased gap between bucket, measurement, and field lists */
+    margin-bottom: 30px;
+}
+
+.bucket-list, .measurement-list, .field-list {
+    flex-grow: 1;
+}
+
+.bucket-list ul, .measurement-list ul, .field-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bucket-list li, .measurement-list li, .field-list li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+}
+
+.bucket-list li::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/bucket.png'); /* Replace with the path to your custom bucket icon */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.measurement-list li::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/measurement.png'); /* Replace with the path to your custom measurement icon */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.field-list li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    cursor: grab;
+    display: flex;
+    align-items: center; 
+    max-width: 200px; /* maximum width */
+    flex-wrap: wrap; /* Change a new line after field name */
+}
+
+.field-list li::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/field.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bucket-list li:hover, .measurement-list li:hover, .field-list li:hover {
+    background-color: #d9e8ff;
+}
+
+/* [Data Source] For selected area */
+.bucket-item, .measurement-item, .field-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+  
+.bucket-item::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/bucket.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+  
+.measurement-item::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/measurement.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+  
+.field-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    max-width: 200px;
+    flex-wrap: wrap;
+}
+
+.field-item::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/field.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+  
+/* [data source] Manage long list*/
+.measurement-list li, .field-list li, .bucket-list li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    max-width: 200px; /* maxium width for the list */
+}
+
+.measurement-list ul, .field-list ul, .bucket-list ul {
+    max-height: 400px; /* maxium height for the list */
+    overflow-y: auto; /* scroll bar */
+}
+
+/* Inside field */
+.measurement-info {
+    color: #888;
+    font-size: 0.4em; 
+    width: 100%;
+    margin-left: 30px;
+}
+
+.field-name {
+    font-weight: bold;
+}
+
+.field-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Set a fixed width for all lists and selected items */
+.bucket-list ul, .measurement-list ul, .field-list ul {
+    max-width: 250px; /* Set a fixed maximum width for all list containers */
+    min-width: 250px;
+    overflow-y: auto; /* Enable vertical scroll bar */
+}
+
+.selected-items {
+    max-width: 270px;
+    min-width: 270px;
+    overflow-y: auto;
+}
+
+.measurement-list li,
+.measurement-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    max-width: 200px; 
+    overflow: hidden; 
+}
+
+.measurement-list li::before,
+.measurement-item::before {
+    content: '';
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('/images/measurement.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.measurement-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    flex-grow: 1; 
+}

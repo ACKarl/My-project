@@ -1,0 +1,78 @@
+<!--frontend/login.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfluxUI - Login</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/custom/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <a href="index.html" class="back-button">
+            <img src="images/back.png" alt="Back to home">
+        </a>
+        <h2>InfluxUI Login</h2>
+        <form id="login-form">
+            <label for="port">InfluxDB Port:</label>
+            <input type="text" id="port" name="port" required>
+
+            <label for="org">Organization:</label>
+            <input type="text" id="org" name="org" required>
+            
+            <label for="token">Token:</label>
+            <input type="text" id="token" name="token" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+    
+            // Get the values from the form
+            const port = document.getElementById('port').value;
+            const org = document.getElementById('org').value;
+            const token = document.getElementById('token').value;
+    
+            try {
+                // Send a POST request to the custom-login endpoint
+                const response = await fetch('/api/auth/custom-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: `http://localhost:${port}`,
+                        org: org,
+                        token: token
+                    })
+                });
+    
+                const data = await response.json();
+    
+                if (response.status === 200) {
+                    alert('Login successful!');
+                    
+                    // Store the values in the session storage
+                    sessionStorage.setItem('orgName', org);
+                    sessionStorage.setItem('influxUrl', `http://localhost:${port}`);
+                    sessionStorage.setItem('influxToken', data.token);
+    
+                    // Jump to the index page after successful login
+                    window.location.href = 'index.html';
+                } else {
+                    alert(`Login failed: ${data.message}`);
+                }
+            } catch (error) {
+                alert('Error during login request');
+                console.error('Login error:', error);
+            }
+        });
+    </script>
+    
+</body>
+</html>
